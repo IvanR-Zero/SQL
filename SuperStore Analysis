@@ -1,0 +1,24 @@
+-- 1. Order by price
+SELECT item_name, price
+FROM superstore
+ORDER BY price;
+
+-- 2. Query that shows max price
+SELECT MAX(price)
+FROM superstore;
+
+-- 3. Show sum of prices for items in "Kitchen Supplies"
+SELECT category, SUM(price)
+FROM superstore
+WHERE category='Kitchen Supplies';
+
+-- 4. Show from highest to lowest the average rating for the items in "Electronics"
+SELECT category, item_name, average_rating
+FROM superstore
+WHERE category='Electronics'
+ORDER BY average_rating desc, item_name;
+
+-- 5. Show the quantity of "Slow Cooker" items
+SELECT item_name, stock_quantity
+FROM superstore
+WHERE item_name='Slow Cooker';
