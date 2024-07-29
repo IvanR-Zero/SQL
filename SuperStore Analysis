@@ -1,4 +1,4 @@
--- DATA BASE
+#This analysis utilized the following SuperStore dataset:
 
 CREATE TABLE superstore (
     item_id INTEGER PRIMARY KEY,
