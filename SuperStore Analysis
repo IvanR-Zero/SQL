@@ -1,4 +1,4 @@
-#This analysis utilized the following SuperStore dataset:
+-- This analysis utilized the following SuperStore dataset: --
 
 CREATE TABLE superstore (
     item_id INTEGER PRIMARY KEY,
@@ -28,7 +28,7 @@ VALUES
     (15, 'Cozy Throw Blanket', 'Furnishings', 24.99, 100, 4.2);
 
 
--- ANALYSIS
+-- ANALYSIS --
 
 -- 1. Order by price.
 SELECT item_name, price
