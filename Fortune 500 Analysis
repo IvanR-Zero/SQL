@@ -1,4 +1,4 @@
-#This analysis utilized the following Fortune 500 dataset:
+-- This analysis utilized the following Fortune 500 dataset:
 
 CREATE TABLE fortune_companies (
     company_id INTEGER PRIMARY KEY,
@@ -58,7 +58,7 @@ VALUES
     ('Company JJ', 'Manufacturing', 370.0, 3100, 1, 20, 12, 7.6),
     ('Company KK', 'Healthcare', 150.2, 3400, 0, 16, 8, 5.3);
 
-#Analysis:
+-- Analysis -- 
 
 -- 1. Which companies have the least to highest employee count?
 SELECT *, COUNT(employees),
