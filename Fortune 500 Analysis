@@ -99,3 +99,46 @@ SELECT company_name, MIN(avg_employee_tenure) AS tenure
 FROM fortune_companies
 GROUP BY company_name
 HAVING tenure >= 7;
+
+-- PART 2
+
+-- 6. Which companies are technology based and have revenue greater than 400
+SELECT company_name, industry
+FROM fortune_companies
+WHERE industry = 'Technology'
+AND revenue >= 400;
+
+-- 7. Which companies are either Retail or Energy based and also have healthcare benefits
+SELECT company_name, revenue, industry, healthcare_benefits
+FROM fortune_companies
+WHERE industry IN ('Retail', 'Energy')
+AND healthcare_benefits = 1
+ORDER BY revenue DESC;
+
+
+-- 8. Shows us of Alias's as well as which companies have paid days off greater than 10
+SELECT company_name, COUNT(paid_time_off_days) AS days_off
+FROM fortune_companies
+HAVING days_off >10;
+
+-- 9. Groups companies based on how much revenue they earn.
+SELECT company_name, revenue,
+CASE
+	WHEN revenue > 500 THEN "Big Company"
+    WHEN revenue > 250 THEN "Decent Company"
+    WHEN revenue > 150 THEN "Smol Company"
+   ELSE "Company too tiny"
+   END AS company_revenues
+  FROM fortune_companies
+  ORDER BY revenue DESC;
+
+-- 10. Shows which companies have maternity weeks greater than 3 and also have healthcare benefits
+SELECT *
+FROM fortune_companies
+GROUP BY industry
+HAVING COUNT(maternity_leave_weeks) > 3
+AND healthcare_benefits = 1;
+
+
+
+
