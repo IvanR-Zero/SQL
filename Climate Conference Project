@@ -1,0 +1,52 @@
+Climate Conference Project
+Database: https://www.db-fiddle.com/f/pxMci1sLL945KHKYvpe9W6/1
+
+--SELECT * FROM vips LIMIT 5;
+
+--Question 1: Using a Left Join. Give the member id, names, association, and hotel number, whos association have "University" in the name
+
+SELECT vips.member_id id, vips.first_name, vips.association, vips.last_name, reservations.hotel
+FROM vips LEFT JOIN reservations 
+ON vips.member_id = reservations.member_id
+WHERE vips.association LIKE "%University%";
+
+--Question 2: Using an Inner Join. Give the names and associations of the vips who have workshop events
+
+SELECT vips.member_id id, vips.first_name, vips.last_name, vips.association, events.event_name
+FROM vips INNER JOIN events
+ON vips.event = events.event_id
+WHERE event_type = "Workshop";
+
+--Question 3: Using multiple JOIN, give the hotel names and event names
+
+SELECT vips.first_name || ' ' || vips.last_name AS name, hotels.hotel_name hotel_name, events.event_name event_name
+FROM vips INNER JOIN reservations
+ON vips.member_id = reservations.member_id
+	INNER JOIN hotels
+    ON reservations.hotel = hotels.hotel_id
+    	INNER JOIN events
+        ON vips.event = events.event_id;
+        
+--Question 4: Using a Subquery, figure out which hotels have a dinner or welcome rsvp
+
+SELECT hotels.hotel_name
+FROM hotels
+WHERE hotel_id = (SELECT hotel
+                 FROM reservations
+                  WHERE reservations.dinner_rsvp = 1 OR reservations.welcome_rsvp = 1);
+                  
+--Question 5: Using a Self Join show which members give feedback to others.
+SELECT speaker.member_id, speaker.first_name || " " || speaker.last_name speakers,
+	listener.member_id, listener.first_name || " " || listener.last_name listerners
+FROM vips speaker 
+INNER JOIN vips listener
+ON speaker.provides_feedback_to = listener.member_id;
+
+-- Question 6: Use a subquery and a join to find out which speakers are staying at the marriot hotel
+
+SELECT vips.first_name || ' ' || vips.last_name AS speaker_name, hotels.hotel_name hotel_name
+FROM vips LEFT JOIN reservations
+ON vips.member_id = reservations.member_id
+	INNER JOIN hotels
+    ON reservations.hotel = hotels.hotel_id
+WHERE hotels.hotel_id = (SELECT hotel_id FROM hotels WHERE hotel_name = "Marriott");
