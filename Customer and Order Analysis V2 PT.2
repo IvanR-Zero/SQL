@@ -1,0 +1,61 @@
+                   Practice questions and answers using the same database as from Customer and Order Analysis V2
+
+-- Query 1
+-- How many of each type of headphone were sold in February?
+
+
+SELECT Product,
+       SUM(Quantity) Quantity
+  FROM BIT_DB.FebSales
+ WHERE Product LIKE '%Headphones%' AND
+       length(orderid) = 6 AND
+       orderid <> 'Order ID'
+ GROUP BY Product;
+ 
+-- Query 2
+-- What was the average amount spent per account in February?
+
+SELECT AVG(quantity * price) 
+  FROM BIT_DB.FebSales fsales
+       JOIN
+       BIT_DB.customers cust ON fsales.orderID = cust.order_id
+ WHERE length(orderid) = 6 AND
+       orderid <> 'Order ID';
+
+      
+-- Query 3
+-- Find order ids from Georgia (GA) where the order has an average price greater than $1,000. Only find orders from dates beginning with ‘04/1’. Assume that the dates are stored in the MM/DD/YY HH:MM format.
+
+SELECT orderID
+FROM BIT_DB.AprSales
+WHERE orderdate LIKE '04/1%' AND location LIKE '%GA%'
+GROUP BY orderID
+HAVING AVG(Quantity * price) > 1000;
+
+--Query 4
+--You’ve been given the following results from the MaySales table. Can you reverse engineer a SQL query that returns these results?
+
+--   MaySales Results location 	orderID
+--818 Wilson St, Los Angeles, CA 90001 	194305
+--2 Center St, Austin, TX 73301 	194315
+--960 Park St, San Francisco, CA 94016 	194325
+--53 Ridge St, Portland, OR 97035 	194335
+--734 Hickory St, New York City, NY 10001 	194345
+--196 Cherry St, Portland, OR 97035 	194355
+--924 13th St, Los Angeles, CA 90001 	194365
+--602 Washington St, New York City, NY 10001 	194375
+--399 12th St, San Francisco, CA 94016 	194385
+--434 Pine St, Seattle, WA 98101 	194395
+
+SELECT location, orderID
+FROM BIT_DB.MaySales
+WHERE orderID between '194305' AND '194395' AND orderID LIKE '_____5';
+
+--Query 5
+--Which product brought in the most revenue in January and how much revenue did it bring in total?
+
+SELECT Product, SUM(Quantity*Price) TotalRevenue
+FROM BIT_DB.JanSales
+GROUP BY Product
+ORDER BY TotalRevenue desc
+LIMIT 1;
